@@ -1,11 +1,17 @@
-import './App.css';
+import { ChakraProvider } from '@chakra-ui/react'
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import Navbar from './components/Navbar'
 
-function App() {
+export default function App() {
+  // 2. Wrap ChakraProvider at the root of your app
   return (
-    <div>
-        <h1>TechYard</h1>
-    </div>
-  );
+    <ChakraProvider>
+      <Router>
+        <Navbar />
+        <main>
+          <Routes></Routes>
+        </main>
+      </Router>
+    </ChakraProvider>
+  )
 }
-
-export default App;
