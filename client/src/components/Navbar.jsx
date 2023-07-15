@@ -14,7 +14,6 @@ const NavLink = ({path, children}) => (
     to={path}
     px={2}
     py={2}
-    alignItems={'center'}
     rounded={'md'}
     _hover={{textDecoration: 'none', bg: useColorModeValue('gray.200', 'gray.700')}}>{children}</Link>
 )
