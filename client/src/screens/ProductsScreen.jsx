@@ -3,6 +3,7 @@ import ProductCard from '../components/ProductCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getProducts } from '../redux/actions/productActions';
+import { Link as ReactLink } from 'react-router-dom';
 
 
 const ProductsScreen = () => {
@@ -43,3 +44,4 @@ const ProductsScreen = () => {
 }
 
 export default ProductsScreen
+

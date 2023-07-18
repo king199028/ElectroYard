@@ -1,8 +1,10 @@
-import { Badge, Box, Circle, Flex, Image, Stack, useColorModeValue, Tooltip, Button, Icon, HStack, Text } from '@chakra-ui/react'
+import { Badge, Box, Circle, Flex, Image, Stack, useColorModeValue, Tooltip, Button, Icon, HStack, Text, useToast } from '@chakra-ui/react'
 import { useState } from 'react'
 import { StarIcon } from '@chakra-ui/icons'
 import {FiShoppingCart} from 'react-icons/fi'
 import {Link, Link as ReactLink} from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux'
+import {addCartItem} from '../redux/actions/cartActions'
 
 const Rating = ({rating, numberOfReviews}) => {
   const {iconSize, setIconSize } = useState('14px');
@@ -23,6 +25,24 @@ const Rating = ({rating, numberOfReviews}) => {
 }
 
 const ProductCard = ({product}) => {
+
+  const dispatch = useDispatch()
+  const {cart} = useSelector(state => state.cart)
+  const toast = useToast();
+
+  const addItem = (id) => {
+    if (cart.some((cartItem) => cartItem.id === id)) {
+      toast({
+        description: 'This item is already in your cart',
+        status: 'error',
+        isClosable: true,
+      });
+    }else{
+      dispatch(addCartItem(id, 1));
+      toast({description:'Item has been added', status: 'success',isClosable:true})
+    }
+  }
+
   return (
     <Stack
         p={2}
@@ -71,7 +91,7 @@ const ProductCard = ({product}) => {
             {product.price.toFixed(2)}
           </Box>
           <Tooltip label='Add to cart' bg='white' placement='top' color={'gray.800'} fontSize={'1.2em'}>
-            <Button variant={'ghost'} display={'flex'} disabled={product.stock <=0}>
+            <Button variant={'ghost'} display={'flex'} disabled={product.stock <=0} onClick={()=>addItem(product._id)}>
               <Icon as={FiShoppingCart} h={5} w={5} alignSelf={'center'} />
             </Button>
           </Tooltip>
